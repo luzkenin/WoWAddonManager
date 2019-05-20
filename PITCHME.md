@@ -1,21 +1,19 @@
-[![Build status](https://ci.appveyor.com/api/projects/status/1vx8e398oo0ua18w?svg=true)](https://ci.appveyor.com/project/luzkenin/wowaddonmanager)
 # WoWAddonManager
 
 WoW addon manager
 
-## GitPitch PitchMe presentation
+---
 
-* [gitpitch.com/luzkenin/WoWAddonManager](https://gitpitch.com/luzkenin/WoWAddonManager)
-
-## Getting Started
+### Getting Started
 
 Install from the PSGallery and Import the module
 
     Install-Module WoWAddonManager
     Import-Module WoWAddonManager
 
+---
 
-## More Information
+### What's next?
 
 For more information
 

@@ -1,0 +1,9 @@
+site_name: WoWAddonManager
+repo_url: https://github.com/luzkenin/WoWAddonManager
+theme: readthedocs
+pages:
+  - Home: index.md
+  - WoWAddonManager Basics:
+    - What is WoWAddonManager: about.md
+    - Quick Start: Quick-Start-Installation-and-Example.md
+  - Acknowledgements: acknowledgements.md
