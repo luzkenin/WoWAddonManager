@@ -11,16 +11,18 @@ function Get-InstalledAddon {
         foreach ($Addon in (Get-ChildItem -Path C:\_retail_\Interface\AddOns)) {
             $TOC = Get-Content "$($Addon.FullName)\$($Addon.Name).toc" -ErrorAction SilentlyContinue
 
-            $Title = ($TOC -match "## Title" | select -First 1).replace("## Title: ", "") | select -First 1
-            $Version = ($TOC -match "## Version" | select -First 1).replace("## Version: ", "") | select -First 1
-            $Notes = ($TOC -match "## Notes" | select -First 1).replace("## Notes: ", "") | select -First 1
-            $Author = ($TOC -match "## Author" | select -First 1).replace("## Author: ", "") | select -First 1
+            $Title = Get-Title -Source $TOC
+            $Version = Get-Version -Source $TOC
+            $Notes = Get-Note -Source $TOC
+            $Author = Get-Author -Source $TOC
+            $Dependencies = Get-Dependency -Source $TOC
             
             [PSCustomObject]@{
-                Title   = $Addon.Name
-                Version = $Version
-                Notes   = $Notes
-                Author  = $Author
+                Title        = $Title
+                Version      = $Version
+                Notes        = $Notes
+                Author       = $Author
+                Dependencies = $Dependencies
             }
             
         }
@@ -31,4 +33,4 @@ function Get-InstalledAddon {
     }
 }
 
-Get-InstalledAddon
+#Get-InstalledAddon
