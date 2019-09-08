@@ -11,6 +11,22 @@ function Get-InstalledAddon {
         foreach ($Addon in (Get-ChildItem -Path C:\_retail_\Interface\AddOns)) {
             $TOC = Get-Content "$($Addon.FullName)\$($Addon.Name).toc" -ErrorAction SilentlyContinue
 
+            #$path = 'D:\Games\Blizzard\World of Warcraft\_classic_\Interface\AddOns\ISBoxer\ISBoxer.toc'
+
+            $data = Get-Content $TOC
+
+            $properties = @{ }
+
+            $pattern = '## (?<propertyName>[^:]*): (?<propertyValue>.*)'
+
+            foreach ($line in $data) {
+                if ($line -match $pattern) {
+                    $properties[$Matches.propertyName] = $Matches.propertyValue
+                }
+            }
+            
+            
+            <#
             $Title = Get-Title -Source $TOC
             $Version = Get-Version -Source $TOC
             $Notes = Get-Note -Source $TOC
@@ -24,7 +40,7 @@ function Get-InstalledAddon {
                 Author       = $Author
                 Dependencies = $Dependencies
             }
-            
+            #>
         }
         
     }
@@ -34,3 +50,5 @@ function Get-InstalledAddon {
 }
 
 #Get-InstalledAddon
+
+

@@ -6,27 +6,43 @@ function Get-WoWInstallPath {
 
     Write-Verbose "Attempting to find WoW install path..."
 
-    try {
+    if ($IsWindows) {
+        try {
 
-        $wowInstallPath = (Get-Item 'hklm:\SOFTWARE\WOW6432Node\Blizzard Entertainment\World of Warcraft').GetValue('InstallPath')
-        $addonsFolder = "$($wowInstallPath)Interface\AddOns"
+            $wowInstallPath = (Get-Item 'hklm:\SOFTWARE\WOW6432Node\Blizzard Entertainment\World of Warcraft').GetValue('InstallPath')
+            $addonsFolder = "$($wowInstallPath)Interface\AddOns"
 
-        $wowInstallInfo = [PSCustomObject]@{
+            $wowInstallInfo = [PSCustomObject]@{
 
-            AddonsFolder   = $addonsFolder
-            WowInstallPath = $wowInstallPath
+                AddonsFolder   = $addonsFolder
+                WowInstallPath = $wowInstallPath
+
+            }
+
+            return $wowInstallInfo
 
         }
 
-        return $wowInstallInfo
+        catch {
 
+            $errorMessage = $_.Exception.Message
+            throw "Error determining WoW Install Path/ElvUi Version -> [$errorMessage]!"
+            break
+
+        }
     }
+    if ($IsLinux) {
+        if (Test-Path -Path "$HOME/Games/world-of-warcraft/drive_c/Program Files (x86)/World of Warcraft/") {
+            $wowInstallPath = "$HOME/Games/world-of-warcraft/drive_c/Program Files (x86)/World of Warcraft/"
+            $addonsFolder = "$($wowInstallPath)Interface/AddOns"
 
-    catch {
+            $wowInstallInfo = [PSCustomObject]@{
 
-        $errorMessage = $_.Exception.Message
-        throw "Error determining WoW Install Path/ElvUi Version -> [$errorMessage]!"
-        break
+                AddonsFolder   = $addonsFolder
+                WowInstallPath = $wowInstallPath
 
+            }
+            return $wowInstallInfo
+        }
     }
 }
